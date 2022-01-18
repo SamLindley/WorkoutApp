@@ -6,7 +6,6 @@ import {
   ListRenderItem,
   FlatList,
   Button,
-  Dimensions,
 } from "react-native";
 import { ExerciseTemplate } from "../interfaces";
 import global from "../styles";
@@ -22,23 +21,19 @@ const WorkoutTemplateItem = ({ exercises, onSelect, name }: Props) => {
 
   const renderListItem: ListRenderItem<ExerciseTemplate> = (itemProps) => {
     return (
-      <View style={{ ...global.listItem, padding: 5 }}>
+      <View style={{ ...global.listItem, paddingVertical: 5 }}>
         <Text key={itemProps.item.id}>{itemProps.item.name}</Text>
       </View>
     );
   };
 
   return (
-    <View
-      style={{
-        padding: 10,
-        paddingTop: 20,
-        width: Dimensions.get("window").width,
-      }}
-    >
-      <TouchableOpacity onPress={() => setIsClosed(!isClosed)}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>{name}</Text>
-      </TouchableOpacity>
+    <View>
+      <View style={{ ...global.listItemHeader, paddingBottom: 20 }}>
+        <TouchableOpacity onPress={() => setIsClosed(!isClosed)}>
+          <Text style={global.listTitle}>{name}</Text>
+        </TouchableOpacity>
+      </View>
       {!isClosed && (
         <View>
           <FlatList data={exercises} renderItem={renderListItem} />

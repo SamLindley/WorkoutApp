@@ -1,6 +1,6 @@
 import React from "react";
 import { Picker } from "react-native-wheel-pick";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 interface Props {
   reps: string;
@@ -29,8 +29,9 @@ const Set = ({ reps, weight, setId, updateSet }: Props) => {
   };
 
   return (
-    <View style={styles.listItem}>
+    <View>
       <View style={styles.inputContainer}>
+        <Text>Reps:</Text>
         <View style={styles.wheelPickerContainer}>
           <Picker
             style={styles.wheelPicker}
@@ -41,6 +42,8 @@ const Set = ({ reps, weight, setId, updateSet }: Props) => {
             }}
           />
         </View>
+        <Text>Weight:</Text>
+
         <View style={styles.wheelPickerContainer}>
           <Picker
             style={styles.wheelPicker}
@@ -59,27 +62,20 @@ const Set = ({ reps, weight, setId, updateSet }: Props) => {
 export default Set;
 
 const styles = StyleSheet.create({
-  listItem: {
-    padding: 20,
-    width: Dimensions.get("screen").width,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
   wheelPickerContainer: {
-    width: 100,
+    width: 80,
     height: 50,
     overflow: "hidden",
   },
   wheelPicker: {
     backgroundColor: "white",
-    bottom: 80,
+    bottom: 82,
   },
   inputContainer: {
     display: "flex",
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
+    alignItems: "center",
   },
 });

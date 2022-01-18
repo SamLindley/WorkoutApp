@@ -10,6 +10,7 @@ export interface ExerciseTemplate {
 export interface ExerciseInstance extends ExerciseTemplate {
   sets: Array<string>;
   date: Date;
+  workoutKey: string;
 }
 
 // Navigation

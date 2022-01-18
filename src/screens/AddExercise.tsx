@@ -76,6 +76,7 @@ const AddExercise = ({ navigation, route }: Props) => {
                   ...e,
                   sets: [],
                   date: new Date(),
+                  workoutKey: route.params.workoutIdToAddTo,
                 };
               })
             );

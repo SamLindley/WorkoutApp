@@ -1,6 +1,13 @@
 import React from "react";
-import { View, FlatList, ListRenderItem, StyleSheet } from "react-native";
-import { Button } from "react-native-paper";
+import {
+  View,
+  FlatList,
+  ListRenderItem,
+  TouchableOpacity,
+  Button,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import global from "../styles";
 import SetComponent from "../components/Set";
 import { Set } from "../interfaces";
 
@@ -9,19 +16,30 @@ interface Props {
   addSet: () => void;
   deleteSet: (id: string) => void;
   updateSet: (id: string, key: string, value: string) => void;
+  isEditingMode: boolean;
 }
 
-const ExerciseInstance = ({ sets, addSet, deleteSet, updateSet }: Props) => {
+const ExerciseInstance = ({
+  sets,
+  addSet,
+  deleteSet,
+  updateSet,
+  isEditingMode,
+}: Props) => {
   const renderListItem: ListRenderItem<Set> = (props) => {
     return (
-      <View>
+      <View style={global.listItemHeader}>
         <SetComponent
           reps={props.item.reps}
           weight={props.item.weight}
           setId={props.item.id}
           updateSet={updateSet}
         />
-        <Button onPress={() => onPressDelete(props.item.id)}>Delete</Button>
+        {isEditingMode && (
+          <TouchableOpacity onPress={() => onPressDelete(props.item.id)}>
+            <Ionicons name="close-circle-outline" size={24} color="red" />
+          </TouchableOpacity>
+        )}
       </View>
     );
   };
@@ -37,7 +55,7 @@ const ExerciseInstance = ({ sets, addSet, deleteSet, updateSet }: Props) => {
   return (
     <View>
       <FlatList data={sets} renderItem={renderListItem} />
-      <Button onPress={onPress}>Add Set</Button>
+      <Button onPress={onPress} title="Add set" color={"black"} />
     </View>
   );
 };

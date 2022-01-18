@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  ListRenderItem,
-  TouchableOpacity,
-} from "react-native";
+import { View, FlatList, ListRenderItem } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import Collapsible from "react-native-collapsible";
 import global from "../styles";
 import {
   addExerciseInstances,
@@ -15,7 +8,6 @@ import {
   getExerciseTemplatesById,
   getRoutine,
   getRoutineTemplates,
-  updateWorkout,
 } from "../db/fakeDb";
 import { RootStackParamList, WorkoutTemplate } from "../interfaces";
 import WorkoutTemplateItem from "../components/WorkoutTemplateItem";
@@ -47,7 +39,7 @@ const AddWorkout = (props: Props) => {
       addExerciseInstances(
         workoutUUID,
         exercises.map((e) => {
-          return { ...e, sets: [], date };
+          return { ...e, sets: [], date, workoutKey: workoutUUID };
         })
       );
       props.navigation.navigate("Routine", {

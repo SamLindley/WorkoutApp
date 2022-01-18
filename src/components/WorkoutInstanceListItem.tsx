@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  Dimensions,
-  StyleSheet,
-} from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import { v4 } from "uuid";
+import { Ionicons } from "@expo/vector-icons";
+
 import {
   addSet,
   deleteSet,
@@ -15,13 +11,18 @@ import {
 } from "../db/fakeDb";
 import { ExerciseInstance, Set } from "../interfaces";
 import ExerciseInstanceComponent from "../screens/ExerciseInstance";
+import global from "../styles";
 
 interface WorkoutListItemProps {
   exerciseInstance: ExerciseInstance;
+  isEditingMode: boolean;
+  deleteExercise: (exercise: ExerciseInstance) => void;
 }
 
 const WorkoutInstanceListItem = ({
   exerciseInstance,
+  isEditingMode,
+  deleteExercise,
 }: WorkoutListItemProps) => {
   const [sets, setSets] = useState<Array<Set> | undefined>([]);
   const [isClosed, setIsClosed] = useState(true);
@@ -38,18 +39,30 @@ const WorkoutInstanceListItem = ({
     setSets(getSetsByExerciseInstance(exerciseInstance.id)?.map((i) => i));
   };
 
+  const onPressDeleteExercise = () => {
+    deleteExercise(exerciseInstance);
+  };
+
   useEffect(() => {
     setSets(getSetsByExerciseInstance(exerciseInstance.id));
   }, []);
 
   return (
-    <View style={styles.listItem}>
-      <TouchableOpacity onPress={() => setIsClosed(!isClosed)}>
-        <Text>{exerciseInstance.name}</Text>
-      </TouchableOpacity>
+    <View style={{ ...global.listItem, flexDirection: "column" }}>
+      <View style={{ ...global.listItemHeader, height: 30 }}>
+        <TouchableOpacity onPress={() => setIsClosed(!isClosed)}>
+          <Text style={global.listTitle}>{exerciseInstance.name}</Text>
+        </TouchableOpacity>
+        {isEditingMode && (
+          <TouchableOpacity onPress={onPressDeleteExercise}>
+            <Ionicons name="close-circle-outline" size={24} color="red" />
+          </TouchableOpacity>
+        )}
+      </View>
       {!isClosed && (
         <ExerciseInstanceComponent
           sets={sets}
+          isEditingMode={isEditingMode}
           addSet={addSetToItem}
           deleteSet={deleteSetFromItem}
           updateSet={updateSetByKeyValue}
@@ -58,17 +71,5 @@ const WorkoutInstanceListItem = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  listItem: {
-    padding: 20,
-    width: Dimensions.get("window").width,
-    display: "flex",
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-});
 
 export default WorkoutInstanceListItem;

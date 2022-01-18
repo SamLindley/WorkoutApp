@@ -80,36 +80,11 @@ const workoutTemplates: Array<WorkoutTemplate> = [
   },
 ];
 
-const fakeWorkoutData: Array<WorkoutInstance> = [
-  {
-    date: new Date(),
-    exercises: ["111", "222", "333", "444"],
-    name: "Squat Day",
-    id: "111",
-  },
-  {
-    date: new Date(),
-    exercises: ["111", "222", "333", "444"],
-    name: "Bench Day",
-    id: "222",
-  },
-  {
-    date: new Date(),
-    exercises: ["111", "222", "333", "444"],
-    name: "Deadlift Day",
-    id: "333",
-  },
-  {
-    date: new Date(),
-    exercises: ["111", "222", "333", "444"],
-    name: "Press Day",
-    id: "444",
-  },
-];
+let fakeWorkoutData: Array<WorkoutInstance> = [];
 
 const fakeExerciseData: Array<ExerciseTemplate> = exWithIds;
 
-const fakeExerciseInstanceData: Array<ExerciseInstance> = [];
+let fakeExerciseInstanceData: Array<ExerciseInstance> = [];
 
 let fakeSetData: Array<Set> = [];
 
@@ -251,7 +226,27 @@ export const deleteSet = (setId: string, exerciseInstanceId: string) => {
   }
 };
 
-export const deleteExerciseInstance = () => {};
+export const deleteExerciseInstance = (
+  exerciseId: string,
+  workoutId: string
+) => {
+  fakeExerciseInstanceData = fakeExerciseInstanceData.filter(
+    (instance) => instance.id !== exerciseId
+  );
+  const oldWorkout = getWorkout(workoutId);
+  if (oldWorkout) {
+    const newWorkout: WorkoutInstance = {
+      ...oldWorkout,
+      exercises: oldWorkout.exercises.filter(
+        (exercise) => exercise !== exerciseId
+      ),
+    };
+    const index = getWorkouts().findIndex(
+      (workout) => workout.id === workoutId
+    );
+    fakeWorkoutData[index] = newWorkout;
+  }
+};
 
 export const deleteWorkout = () => {};
 
