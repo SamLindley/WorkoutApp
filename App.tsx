@@ -1,21 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Provider } from "react-native-paper";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import Home from "./src/screens/Home";
+import Routine from "./src/screens/Routine";
+import ExerciseInstance from "./src/screens/ExerciseInstance";
+import Workout from "./src/screens/Workout";
+import { RootStackParamList } from "./src/interfaces";
+import AddExercise from "./src/screens/AddExercise";
+import AddWorkout from "./src/screens/AddWorkout";
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="Routine"
+            component={Routine}
+            options={({ route }) => ({ title: route.params.routine.name })}
+          />
+          <Stack.Screen name="Workout" component={Workout} />
+          <Stack.Screen
+            name="ExerciseInstance"
+            component={ExerciseInstance}
+            options={({ route }) => ({
+              title: route.params.exerciseInstance.name,
+            })}
+          />
+          <Stack.Screen
+            name="AddExercise"
+            component={AddExercise}
+            options={() => ({
+              title: "Add Exercises",
+            })}
+          />
+          <Stack.Screen name="AddWorkout" component={AddWorkout} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

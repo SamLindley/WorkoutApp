@@ -1,0 +1,308 @@
+[
+  {
+    "bodyPart": "chest",
+    "name": "Bench",
+    "type": "Push",
+    "id": "4f5ab578-d022-4c75-a351-03eac8e76315"
+  },
+  {
+    "bodyPart": "chest",
+    "name": "Incline Bench",
+    "type": "Push",
+    "id": "cdc40de4-150f-452c-b0c3-1b5db5005a81"
+  },
+  {
+    "bodyPart": "chest",
+    "name": "Dumbbell Bench",
+    "type": "Push",
+    "id": "969cd290-4ed2-46ed-9ac6-5dd13fd747b9"
+  },
+  {
+    "bodyPart": "chest",
+    "name": "Cable Flies High",
+    "type": "Push",
+    "id": "9c7bc95b-09c6-4143-9db2-75b22a84c967"
+  },
+  {
+    "bodyPart": "chest",
+    "name": "Push Ups",
+    "type": "Push",
+    "id": "98c3109a-bc6d-4463-aacb-46b3e634ac10"
+  },
+  {
+    "bodyPart": "chest",
+    "name": "Cable Flies Low",
+    "type": "Push",
+    "id": "4b5d426e-686e-4b82-9e4c-ddadd5368690"
+  },
+  {
+    "bodyPart": "chest",
+    "name": "Machine Press",
+    "type": "Push",
+    "id": "606f0927-595f-4060-b6a9-b2b42ef997f1"
+  },
+  {
+    "bodyPart": "chest",
+    "name": "Machine Incline Press",
+    "type": "Push",
+    "id": "b6ff78e7-60a2-4144-96b0-76a116f601f6"
+  },
+  {
+    "bodyPart": "chest",
+    "name": "Dips",
+    "type": "Push",
+    "id": "2308fb97-50f4-4b02-86ca-8ec6e45eed75"
+  },
+  {
+    "bodyPart": "chest",
+    "name": "Decline Bench",
+    "type": "Push",
+    "id": "8afd0957-6cf9-4c5c-8c37-25ea733e2ca8"
+  },
+  {
+    "bodyPart": "legs",
+    "name": "Squats",
+    "type": "Push",
+    "id": "88c8fdcf-c69f-4aaf-97cd-1fab2f5bee7b"
+  },
+  {
+    "bodyPart": "legs",
+    "name": "Lunges",
+    "type": "Push",
+    "id": "53d6ef69-1b61-4863-afbe-d2a46080646c"
+  },
+  {
+    "bodyPart": "legs",
+    "name": "Leg Press",
+    "type": "Push",
+    "id": "d9581089-6fb0-4273-8fcc-e0f90168bd32"
+  },
+  {
+    "bodyPart": "legs",
+    "name": "Leg Curls",
+    "type": "Push",
+    "id": "7d09fff3-e4e9-4aa6-bf1b-21f24ae29058"
+  },
+  {
+    "bodyPart": "legs",
+    "name": "Leg Extensions",
+    "type": "Push",
+    "id": "b355f8ee-5c9c-4563-b126-0e3d9db4ac29"
+  },
+  {
+    "bodyPart": "legs",
+    "name": "Calf Raises",
+    "type": "Push",
+    "id": "74610ad6-af9a-4ca5-9b0e-dddf802e5691"
+  },
+  {
+    "bodyPart": "legs",
+    "name": "RDL",
+    "type": "Push",
+    "id": "89986236-c3a6-41cf-bb99-bb163988c7c7"
+  },
+  {
+    "bodyPart": "legs",
+    "name": "Pistol Squats",
+    "type": "Push",
+    "id": "346447f0-5a68-41a6-8f9a-20be7feac298"
+  },
+  {
+    "bodyPart": "legs",
+    "name": "Hip Thrusts",
+    "type": "Push",
+    "id": "6c2ff6b9-c3b1-45b8-9fbe-3674e08e7709"
+  },
+  {
+    "bodyPart": "legs",
+    "name": "Front Squats",
+    "type": "Push",
+    "id": "48fea6ea-03ec-4157-a8b3-81eb29676f6e"
+  },
+  {
+    "bodyPart": "shoulders",
+    "name": "OHP",
+    "type": "Push",
+    "id": "559efbdc-7d10-4e05-bca9-adac14ded5ca"
+  },
+  {
+    "bodyPart": "shoulders",
+    "name": "Side Lateral Raises",
+    "type": "Push",
+    "id": "6af00c9f-db39-4129-bb1d-ed859b24c86c"
+  },
+  {
+    "bodyPart": "shoulders",
+    "name": "Front Lateral Raises",
+    "type": "Push",
+    "id": "24e2d7e5-aa5c-40bc-a6b9-c7d46ee14d43"
+  },
+  {
+    "bodyPart": "shoulders",
+    "name": "Seated Dumbell Shoulder Press",
+    "type": "Push",
+    "id": "08ad3c5b-3990-40c4-be00-825852541684"
+  },
+  {
+    "bodyPart": "shoulders",
+    "name": "Dumbell Should Press",
+    "type": "Push",
+    "id": "7272708b-fd8b-44e4-b4e5-288e72adbf97"
+  },
+  {
+    "bodyPart": "shoulders",
+    "name": "Rear Delt Flies",
+    "type": "Push",
+    "id": "4e4a4301-fcbc-461c-ba62-1a5c43988f31"
+  },
+  {
+    "bodyPart": "shoulders",
+    "name": "Cable Lateral Raises",
+    "type": "Push",
+    "id": "31e257fb-b1a0-46bb-bd71-1bfe54bf05f1"
+  },
+  {
+    "bodyPart": "shoulders",
+    "name": "Machine Shoulder Press",
+    "type": "Push",
+    "id": "5c52c791-be3c-4956-9437-42daaedc326d"
+  },
+  {
+    "bodyPart": "back",
+    "name": "Deadlift",
+    "type": "Pull",
+    "id": "f33df687-127c-499a-9236-ae41a6292fb0"
+  },
+  {
+    "bodyPart": "back",
+    "name": "Sumo Deadlift",
+    "type": "Pull",
+    "id": "7f42c4b7-4baa-47c4-b2ed-ba40b1bebe00"
+  },
+  {
+    "bodyPart": "back",
+    "name": "Back Extensions",
+    "type": "Pull",
+    "id": "0cf7f0bf-1a1f-4739-82ed-1c9d33a7496a"
+  },
+  {
+    "bodyPart": "back",
+    "name": "Pendley Rows",
+    "type": "Pull",
+    "id": "7d58cd98-25cc-4048-ac94-cce4f7a2b064"
+  },
+  {
+    "bodyPart": "back",
+    "name": "Bodybuilder Rows",
+    "type": "Pull",
+    "id": "37946a9d-f0e4-47d7-aae2-3ae5582e73ab"
+  },
+  {
+    "bodyPart": "back",
+    "name": "Seated Rows",
+    "type": "Pull",
+    "id": "b0ec3e96-c552-43b8-8fce-3ece6d8567e0"
+  },
+  {
+    "bodyPart": "back",
+    "name": "Lateral Pulldowns",
+    "type": "Pull",
+    "id": "235c262b-f0be-43d5-a4a7-b478ac5ed5f0"
+  },
+  {
+    "bodyPart": "back",
+    "name": "Pull Ups",
+    "type": "Pull",
+    "id": "ee9ad1ae-0cf0-4c99-a1a3-4837f5019d20"
+  },
+  {
+    "bodyPart": "back",
+    "name": "Chin Ups",
+    "type": "Pull",
+    "id": "0a11548b-a0e6-4362-93b7-183fb617892a"
+  },
+  {
+    "bodyPart": "back",
+    "name": "Face Pulls",
+    "type": "Pull",
+    "id": "69a3aefe-707d-4f93-8f68-6c8c6f28bf7e"
+  },
+  {
+    "bodyPart": "triceps",
+    "name": "Close Grip Bench",
+    "type": "Push",
+    "id": "bc306974-18e1-4714-869c-f129df8cc533"
+  },
+  {
+    "bodyPart": "triceps",
+    "name": "Face Crushers",
+    "type": "Push",
+    "id": "609f2ee8-ae16-449a-9005-b6ba11f90360"
+  },
+  {
+    "bodyPart": "triceps",
+    "name": "Cable Kickbacks",
+    "type": "Push",
+    "id": "f4c83da5-84d9-4249-99a7-2e5505077361"
+  },
+  {
+    "bodyPart": "triceps",
+    "name": "Rope Pushdowns",
+    "type": "Push",
+    "id": "77332b42-2928-405f-8c59-be4756955bda"
+  },
+  {
+    "bodyPart": "triceps",
+    "name": "Bar Pushdowns",
+    "type": "Push",
+    "id": "faf5f923-ae64-4721-acd9-9c7fefe65418"
+  },
+  {
+    "bodyPart": "triceps",
+    "name": "Machine Pushdowns",
+    "type": "Push",
+    "id": "46b27723-0b15-4625-b5cc-91849810310a"
+  },
+  {
+    "bodyPart": "biceps",
+    "name": "Standing Curls Normal",
+    "type": "Pull",
+    "id": "41d7fecb-0d41-4e05-b41d-110feb6f8480"
+  },
+  {
+    "bodyPart": "biceps",
+    "name": "Standing Curls Wide",
+    "type": "Pull",
+    "id": "a64961de-8e40-46b6-9d58-04e113faf585"
+  },
+  {
+    "bodyPart": "biceps",
+    "name": "Dumbell Curls",
+    "type": "Pull",
+    "id": "f61adac5-cf3e-42e4-8a82-bd26e0fd8b58"
+  },
+  {
+    "bodyPart": "biceps",
+    "name": "Hammer Curls",
+    "type": "Pull",
+    "id": "a48278ed-94d1-47a8-b3bd-17fbfbe19716"
+  },
+  {
+    "bodyPart": "biceps",
+    "name": "Seated Hammer Curls",
+    "type": "Pull",
+    "id": "af2ebd99-655d-4562-b789-d329c4c5174b"
+  },
+  {
+    "bodyPart": "biceps",
+    "name": "Preacher Curls",
+    "type": "Pull",
+    "id": "af2ebd99-4tyf-4562-b789-d329c4c5174b"
+  },
+  {
+    "bodyPart": "biceps",
+    "name": "One Arm Preacher Curls",
+    "type": "Pull",
+    "id": "af2ebd99-655d-fj54-lr42-d329c4c5174b"
+  }
+]
