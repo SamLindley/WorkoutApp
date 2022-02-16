@@ -1,17 +1,19 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View } from "react-native";
-import { Button } from "react-native-paper";
 import ExerciseTemplateFilter from "../components/ExerciseTemplateFilter";
 import ExerciseTemplateList from "../components/ExerciseTemplateList";
-import { addExerciseInstances, getExercises } from "../db/fakeDb";
+import { addExerciseInstances, getExerciseTemplates } from "../db";
 import { RootStackParamList, ExerciseTemplate } from "../interfaces";
 import global from "../styles";
+import Button from "../components/Button";
 
 type Props = NativeStackScreenProps<RootStackParamList, "AddExercise">;
 
 const AddExercise = ({ navigation, route }: Props) => {
-  const [exerciseTemplates, setExerciseTemplates] = useState(getExercises);
+  const [exerciseTemplates, setExerciseTemplates] = useState(
+    [] as Array<ExerciseTemplate>
+  );
   const [filterTerms, setFilterTerms] = useState([] as Array<string>);
   const [exercisesToAdd, setExercisesToAdd] = useState(
     [] as Array<ExerciseTemplate>
@@ -19,13 +21,16 @@ const AddExercise = ({ navigation, route }: Props) => {
 
   useEffect(() => {
     // filter exerciseTemplates based on filter
-    const exercises = getExercises();
-    const filteredExercises = exercises.filter((exercise) => {
-      return filterTerms.includes(exercise.bodyPart);
-    });
-    if (filteredExercises.length) {
-      setExerciseTemplates(filteredExercises);
-    } else setExerciseTemplates(exercises);
+    const applyFilter = async () => {
+      const exercises = await getExerciseTemplates();
+      const filteredExercises = exercises?.filter((exercise) => {
+        return filterTerms.includes(exercise.bodyPart);
+      });
+      if (filteredExercises?.length) {
+        setExerciseTemplates(filteredExercises);
+      } else if (exercises) setExerciseTemplates(exercises);
+    };
+    applyFilter();
   }, [filterTerms]);
 
   const onFilterAdd = (term: string) => {
@@ -65,28 +70,27 @@ const AddExercise = ({ navigation, route }: Props) => {
       />
       {exercisesToAdd.length > 0 && (
         <Button
-          style={{
-            backgroundColor: "green",
-          }}
-          onPress={() => {
-            addExerciseInstances(
+          onPress={async () => {
+            await addExerciseInstances(
               route.params.workoutIdToAddTo,
               exercisesToAdd.map((e) => {
                 return {
                   ...e,
                   sets: [],
-                  date: new Date(),
-                  workoutKey: route.params.workoutIdToAddTo,
+                  dateCompleted: null,
+                  workoutIdKey: route.params.workoutIdToAddTo,
+                  isPrimary: false,
+                  templateIdKey: e.id,
                 };
-              })
+              }),
+              "111"
             );
             navigation.navigate("Workout", {
               workoutId: route.params.workoutIdToAddTo,
             });
           }}
-        >
-          Add {exercisesToAdd.length} Exercises
-        </Button>
+          title={`Add ${exercisesToAdd.length} Exercises`}
+        />
       )}
     </View>
   );

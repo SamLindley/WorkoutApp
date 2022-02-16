@@ -1,15 +1,10 @@
 import React from "react";
-import {
-  View,
-  FlatList,
-  ListRenderItem,
-  TouchableOpacity,
-  Button,
-} from "react-native";
+import { View, FlatList, ListRenderItem, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import global from "../styles";
 import SetComponent from "../components/Set";
 import { Set } from "../interfaces";
+import Button from "../components/Button";
 
 interface Props {
   sets: Array<Set> | undefined;
@@ -55,7 +50,7 @@ const ExerciseInstance = ({
   return (
     <View>
       <FlatList data={sets} renderItem={renderListItem} />
-      <Button onPress={onPress} title="Add set" color={"black"} />
+      <Button onPress={onPress} title="Add set" />
     </View>
   );
 };

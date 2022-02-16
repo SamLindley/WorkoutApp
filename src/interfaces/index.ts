@@ -8,9 +8,11 @@ export interface ExerciseTemplate {
 }
 
 export interface ExerciseInstance extends ExerciseTemplate {
-  sets: Array<string>;
-  date: Date;
-  workoutKey: string;
+  sets: Array<Set>;
+  dateCompleted: Date | null;
+  workoutIdKey: string;
+  isPrimary: boolean;
+  templateIdKey: string;
 }
 
 // Navigation
@@ -26,11 +28,14 @@ export type RootStackParamList = {
 
 // Routines
 
-export interface Routine {
+interface PrimaryPattern {
   name: string;
-  workouts: Array<string>;
-  id: string;
-  workoutTemplates?: Array<string>;
+  increment: number;
+  setPatterns: {
+    reps: number;
+    weightPercent: number;
+    required?: boolean;
+  }[];
 }
 
 // Sets
@@ -39,16 +44,50 @@ export interface Set {
   reps: string;
   weight: string;
   id: string;
+  exerciseInstanceIdKey: string;
+  exerciseName: string;
+  goalReps: string;
+  isPrimary: boolean;
+  required: boolean;
 }
 
 // Workouts
 
 export interface WorkoutTemplate {
   name: string;
+  firstIsPrimary: boolean;
   exercises: Array<string>;
   id: string;
 }
 
-export interface WorkoutInstance extends WorkoutTemplate {
-  date: Date;
+export interface WorkoutInstance {
+  dateCompleted: Date | null;
+  templateId: string;
+  name: string;
+  firstIsPrimary: boolean;
+  exercises: Array<ExerciseInstance>;
+  id: string;
+}
+
+export interface WorkoutWeek {
+  week: string;
+  workouts: Array<WorkoutInstance>;
+}
+
+// user
+
+export interface UserSettings {
+  routineId: string;
+  exercises: { weight: number; name: string }[];
+}
+
+// Routine
+
+export interface Routine {
+  name: string;
+  workouts: Array<WorkoutInstance>;
+  id: string;
+  workoutTemplates?: Array<string>;
+  cycle: Array<string>;
+  primaryPatterns: PrimaryPattern[];
 }

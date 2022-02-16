@@ -24,6 +24,7 @@ const buttonValues = [
   { term: "legs", label: "Legs" },
   { term: "triceps", label: "Triceps" },
   { term: "biceps", label: "Biceps" },
+  { term: "back", label: "Back" },
 ];
 
 const ExerciseTemplateFilter = (props: Props) => {
@@ -59,18 +60,21 @@ const ExerciseTemplateFilter = (props: Props) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
+    flexWrap: "wrap",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "flex-start",
     width: Dimensions.get("window").width,
+    paddingHorizontal: 20,
   },
   button: {
-    backgroundColor: "pink",
+    backgroundColor: "white",
     padding: 10,
     borderRadius: 10,
     borderStyle: "solid",
     borderColor: "black",
     borderWidth: 1,
+    marginHorizontal: 4,
   },
   selected: {
     backgroundColor: "green",

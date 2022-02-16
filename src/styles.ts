@@ -1,6 +1,18 @@
 import { Dimensions, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  button: {
+    borderRadius: 6,
+    borderColor: "black",
+    borderStyle: "solid",
+    borderWidth: 2,
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+    marginVertical: 4,
+  },
+  collapsibleTitleWithIcon: {
+    flexDirection: "row",
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -29,6 +41,7 @@ const styles = StyleSheet.create({
   },
   listTitle: {
     fontSize: 20,
+    marginRight: 10,
   },
 });
 

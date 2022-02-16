@@ -1,22 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Text, View, FlatList, ListRenderItem } from "react-native";
-import { Button } from "react-native-paper";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { Routine } from "../interfaces";
-import styles from "../styles";
+import global from "../styles";
 import { RootStackParamList } from "../interfaces";
-import { getRoutines } from "../db/fakeDb";
+import { getRoutines, performSetup } from "../db";
+import { useFocusEffect } from "@react-navigation/native";
+import useTimerContext from "../state/hooks/useTimerContext";
+import Button from "../components/Button";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const Home = ({ navigation }: Props): React.ReactElement => {
   const [routines, setRoutines] = useState([] as Array<Routine>);
+  const TimerContext = useTimerContext();
 
-  useEffect(() => {
-    setRoutines(getRoutines());
-  });
+  useFocusEffect(
+    useCallback(() => {
+      const screenSetup = async () => {
+        await performSetup();
+        const routines = await getRoutines();
+        if (routines) {
+          setRoutines(routines);
+        }
+      };
+      screenSetup();
+    }, [])
+  );
 
   const renderListItem: ListRenderItem<Routine> = (props) => {
     return (
@@ -26,22 +38,17 @@ const Home = ({ navigation }: Props): React.ReactElement => {
             routine: props.item,
           })
         }
-      >
-        {props.item.name}
-      </Button>
+        title={props.item.name}
+      />
     );
   };
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Molly Tränar</Text>
+    <View style={global.container}>
+      <Text style={global.title}>Molly Tränar</Text>
       <Button
-        icon="plus"
-        mode="outlined"
-        color="black"
-        onPress={() => console.log("Hey!")}
-      >
-        Add Workout
-      </Button>
+        onPress={() => TimerContext.startTimer(120)}
+        title="Add workout"
+      />
       <FlatList data={routines} renderItem={renderListItem} />
       <StatusBar style="auto" />
     </View>

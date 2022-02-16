@@ -1,23 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TouchableOpacity,
   Text,
   ListRenderItem,
   FlatList,
-  Button,
 } from "react-native";
+import Button from "../components/Button";
+import { getExerciseTemplatesById } from "../db";
 import { ExerciseTemplate } from "../interfaces";
 import global from "../styles";
 
 interface Props {
   onSelect: () => void;
-  exercises: Array<ExerciseTemplate>;
+  exerciseIds: Array<string>;
   name: string;
 }
 
-const WorkoutTemplateItem = ({ exercises, onSelect, name }: Props) => {
+const WorkoutTemplateItem = ({ exerciseIds, onSelect, name }: Props) => {
   const [isClosed, setIsClosed] = useState(true);
+  const [exercises, setExercises] = useState([] as Array<ExerciseTemplate>);
+
+  useEffect(() => {
+    const setupComponent = async () => {
+      const exercises = await getExerciseTemplatesById(exerciseIds);
+      exercises && setExercises(exercises);
+    };
+    setupComponent();
+  }, []);
 
   const renderListItem: ListRenderItem<ExerciseTemplate> = (itemProps) => {
     return (
@@ -37,7 +47,7 @@ const WorkoutTemplateItem = ({ exercises, onSelect, name }: Props) => {
       {!isClosed && (
         <View>
           <FlatList data={exercises} renderItem={renderListItem} />
-          <Button onPress={onSelect} title="Add Workout" />
+          <Button onPress={onSelect} title="Add workout" />
         </View>
       )}
     </View>

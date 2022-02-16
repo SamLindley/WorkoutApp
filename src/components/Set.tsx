@@ -1,6 +1,7 @@
 import React from "react";
 import { Picker } from "react-native-wheel-pick";
 import { View, StyleSheet, Text } from "react-native";
+import { createWeightOptions } from "../utils";
 
 interface Props {
   reps: string;
@@ -8,16 +9,6 @@ interface Props {
   setId: string;
   updateSet: (id: string, key: string, value: string) => void;
 }
-
-const createWeightOptions = () => {
-  const initialArray = [...Array(200).keys()];
-  return initialArray
-    .reduce((acc: number[], item) => {
-      acc.push((item += 0.5));
-      return acc;
-    }, initialArray)
-    .sort((a, b) => a - b);
-};
 
 const Set = ({ reps, weight, setId, updateSet }: Props) => {
   const onWeightUpdate = (e: string) => {
@@ -43,7 +34,6 @@ const Set = ({ reps, weight, setId, updateSet }: Props) => {
           />
         </View>
         <Text>Weight:</Text>
-
         <View style={styles.wheelPickerContainer}>
           <Picker
             style={styles.wheelPicker}
