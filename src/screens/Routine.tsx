@@ -3,9 +3,8 @@ import { v4 } from "uuid";
 
 import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import { ListRenderItem, View, FlatList, Text, StyleSheet } from "react-native";
-import BottomSheet from "@gorhom/bottom-sheet";
+import React, { useState } from "react";
+import { ListRenderItem, View, FlatList, Text } from "react-native";
 import groupBy from "lodash/groupBy";
 import moment from "moment";
 import {
@@ -24,7 +23,6 @@ import global from "../styles";
 import RoutineListItem from "../components/RoutineListItem";
 import withTimerContext from "../state/hoc/withTimerContext";
 import Button from "../components/Button";
-import ExerciseHistory from "../components/ExerciseHistory";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Routine">;
 
@@ -63,8 +61,6 @@ const RoutineScreen = ({ navigation, route }: Props) => {
     const workoutInstances = await getWorkoutInstancesByRoutine(routineId);
     workoutInstances && setWorkouts(workoutInstances);
   };
-
-  const bottomSheetRef = useRef<BottomSheet>(null);
 
   const onClickCustom = () => {
     navigation.push("AddWorkout", { routineIdToAddTo: routine.id });
@@ -113,12 +109,6 @@ const RoutineScreen = ({ navigation, route }: Props) => {
     );
   };
 
-  const snapPoints = useMemo(() => ["10%", "50%"], []);
-
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
   return (
     <View style={global.container}>
       <Text>Workouts</Text>
@@ -129,31 +119,8 @@ const RoutineScreen = ({ navigation, route }: Props) => {
         data={formattedData.reverse()}
         renderItem={renderWeekItem}
       />
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={1}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-      >
-        <View style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
-          <ExerciseHistory name="Bench" routineId={routine.id} />
-        </View>
-      </BottomSheet>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: "grey",
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-});
 
 export default withTimerContext(RoutineScreen);

@@ -12,18 +12,22 @@ interface Props {
 export default ({ name, routineId }: Props) => {
   const [history, setHistory] = useState([] as Array<ExerciseInstance>);
 
+  const fetchData = async () => {
+    const pastInstances = await getLastXCompletedExerciseInstances(
+      name,
+      3,
+      routineId
+    );
+
+    setHistory(pastInstances);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [name]);
+
   useFocusEffect(
     useCallback(() => {
-      const fetchData = async () => {
-        const pastInstances = await getLastXCompletedExerciseInstances(
-          name,
-          3,
-          routineId
-        );
-
-        setHistory(pastInstances);
-      };
-
       fetchData();
     }, [])
   );

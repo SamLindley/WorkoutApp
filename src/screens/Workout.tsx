@@ -1,6 +1,7 @@
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import BottomSheet from "@gorhom/bottom-sheet";
 import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useState } from "react";
 import {
   View,
   FlatList,
@@ -9,7 +10,6 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import { Title } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import WorkoutInstanceListItem from "../components/WorkoutInstanceListItem";
@@ -27,6 +27,7 @@ import {
 } from "../interfaces";
 import global from "../styles";
 import Button from "../components/Button";
+import ExerciseHistory from "../components/ExerciseHistory";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Workout">;
 
@@ -34,6 +35,15 @@ const Workout = ({ navigation, route }: Props) => {
   const [exercises, setExercises] = useState([] as Array<ExerciseInstance>);
   const [workout, setWorkout] = useState({} as WorkoutInstance);
   const [isEditingMode, setIsEditingMode] = useState(false);
+  const [exerciseToShowHistoryOf, setExerciseToShowHistoryOf] = useState(
+    undefined as unknown as string
+  );
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ["10%", "50%"], []);
+
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -105,6 +115,7 @@ const Workout = ({ navigation, route }: Props) => {
         isEditingMode={isEditingMode}
         deleteExercise={onClickDeleteExercise}
         key={props.item.id}
+        onShowHistoryPressed={() => setExerciseToShowHistoryOf(props.item.name)}
       />
     );
   };
@@ -120,7 +131,7 @@ const Workout = ({ navigation, route }: Props) => {
         }}
       >
         <MaterialIcons name="edit" size={24} color="white" />
-        <Title>{workout.name}</Title>
+        <Text>{workout.name}</Text>
         {workout.dateCompleted && <Text>Completed</Text>}
 
         <TouchableOpacity onPress={() => setIsEditingMode(!isEditingMode)}>
@@ -140,6 +151,19 @@ const Workout = ({ navigation, route }: Props) => {
         />
       )}
       <Button onPress={onClickComplete} title="Mark Complete" />
+      {exerciseToShowHistoryOf && (
+        <BottomSheet
+          ref={bottomSheetRef}
+          index={1}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}
+        >
+          <View>
+            <Text>Awesome 🎉</Text>
+            <ExerciseHistory name={exerciseToShowHistoryOf} routineId="111" />
+          </View>
+        </BottomSheet>
+      )}
     </View>
   );
 };

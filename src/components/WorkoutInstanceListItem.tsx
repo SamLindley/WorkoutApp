@@ -8,17 +8,20 @@ import { addSet, deleteSet, getSetsByExerciseInstance, updateSet } from "../db";
 import { ExerciseInstance, Set } from "../interfaces";
 import ExerciseInstanceComponent from "../screens/ExerciseInstance";
 import global from "../styles";
+import Button from "./Button";
 
 interface WorkoutListItemProps {
   exerciseInstance: ExerciseInstance;
   isEditingMode: boolean;
   deleteExercise: (exercise: ExerciseInstance) => void;
+  onShowHistoryPressed: () => void;
 }
 
 const WorkoutInstanceListItem = ({
   exerciseInstance,
   isEditingMode,
   deleteExercise,
+  onShowHistoryPressed,
 }: WorkoutListItemProps) => {
   const [sets, setSets] = useState<Array<Set> | undefined>([]);
   const [isClosed, setIsClosed] = useState(true);
@@ -81,6 +84,7 @@ const WorkoutInstanceListItem = ({
           />
         </TouchableOpacity>
         {exerciseInstance.isPrimary && <Text>Primary</Text>}
+        <Button onPress={onShowHistoryPressed} title="History" />
 
         {isEditingMode && (
           <TouchableOpacity onPress={onPressDeleteExercise}>
