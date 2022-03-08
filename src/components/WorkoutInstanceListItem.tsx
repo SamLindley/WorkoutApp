@@ -3,12 +3,14 @@ import { View, TouchableOpacity, Text } from "react-native";
 import "react-native-get-random-values";
 import { v4 } from "uuid";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import useRoutineContext from "../state/hooks/useRoutineContext";
 
 import { addSet, deleteSet, getSetsByExerciseInstance, updateSet } from "../db";
 import { ExerciseInstance, Set } from "../interfaces";
 import ExerciseInstanceComponent from "../screens/ExerciseInstance";
 import global from "../styles";
-import Button from "./Button";
+import RoutineListItem from "./RoutineListItem";
 
 interface WorkoutListItemProps {
   exerciseInstance: ExerciseInstance;
@@ -28,6 +30,8 @@ const WorkoutInstanceListItem = ({
   const getPreviousWeight = () => {
     return sets?.pop()?.weight;
   };
+  const RoutineContext = useRoutineContext();
+  const { currentRoutineId } = RoutineContext;
   const addSetToItem = async () => {
     await addSet(
       exerciseInstance.id,
@@ -37,14 +41,20 @@ const WorkoutInstanceListItem = ({
         exerciseName: exerciseInstance.name,
         weight: getPreviousWeight() || 0,
       } as Set,
-      "111"
+      currentRoutineId
     );
-    const sets = await getSetsByExerciseInstance(exerciseInstance.id, "111");
+    const sets = await getSetsByExerciseInstance(
+      exerciseInstance.id,
+      currentRoutineId
+    );
     setSets(sets?.map((i) => i));
   };
   const deleteSetFromItem = async (setId: string) => {
-    await deleteSet(setId, "111");
-    const sets = await getSetsByExerciseInstance(exerciseInstance.id, "111");
+    await deleteSet(setId, currentRoutineId);
+    const sets = await getSetsByExerciseInstance(
+      exerciseInstance.id,
+      currentRoutineId
+    );
     setSets(sets?.map((i) => i));
   };
   const updateSetByKeyValue = async (
@@ -52,8 +62,11 @@ const WorkoutInstanceListItem = ({
     key: string,
     value: string
   ) => {
-    await updateSet(setId, key, value, "111");
-    const sets = await getSetsByExerciseInstance(exerciseInstance.id, "111");
+    await updateSet(setId, key, value, currentRoutineId);
+    const sets = await getSetsByExerciseInstance(
+      exerciseInstance.id,
+      currentRoutineId
+    );
     setSets(sets?.map((i) => i));
   };
 
@@ -63,7 +76,10 @@ const WorkoutInstanceListItem = ({
 
   useEffect(() => {
     const setupComponent = async () => {
-      const sets = await getSetsByExerciseInstance(exerciseInstance.id, "111");
+      const sets = await getSetsByExerciseInstance(
+        exerciseInstance.id,
+        currentRoutineId
+      );
       setSets(sets?.map((i) => i));
     };
     setupComponent();
@@ -84,7 +100,11 @@ const WorkoutInstanceListItem = ({
           />
         </TouchableOpacity>
         {exerciseInstance.isPrimary && <Text>Primary</Text>}
-        <Button onPress={onShowHistoryPressed} title="History" />
+        {!isEditingMode && (
+          <TouchableOpacity onPress={onShowHistoryPressed}>
+            <MaterialIcons name="history" size={24} color="black" />
+          </TouchableOpacity>
+        )}
 
         {isEditingMode && (
           <TouchableOpacity onPress={onPressDeleteExercise}>

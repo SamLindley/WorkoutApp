@@ -28,7 +28,6 @@ type Props = NativeStackScreenProps<RootStackParamList, "Routine">;
 
 const RoutineScreen = ({ navigation, route }: Props) => {
   const [workouts, setWorkouts] = useState([] as Array<WorkoutInstance>);
-  const [isLoading, setIsLoading] = useState(false);
   const {
     params: { routine },
   } = route;
@@ -36,17 +35,19 @@ const RoutineScreen = ({ navigation, route }: Props) => {
   useFocusEffect(
     React.useCallback(() => {
       const setupScreen = async () => {
-        setIsLoading(true);
-        const updatedRoutine = await getRoutine(routine.id);
-        if (updatedRoutine) {
-          const workoutInstances = await getWorkoutInstancesById(
-            updatedRoutine.workouts.map((w) => w.id),
-            "111"
-          );
+        try {
+          const updatedRoutine = await getRoutine(routine.id);
+          if (updatedRoutine) {
+            const workoutInstances = await getWorkoutInstancesById(
+              updatedRoutine.workouts.map((w) => w.id),
+              routine.id
+            );
 
-          workoutInstances && setWorkouts(workoutInstances);
+            workoutInstances && setWorkouts(workoutInstances);
+          }
+        } catch (e) {
+          console.log(e);
         }
-        setIsLoading(false);
       };
       setupScreen();
     }, [routine])

@@ -9,6 +9,7 @@ import { RootStackParamList } from "../interfaces";
 import { getRoutines, performSetup } from "../db";
 import { useFocusEffect } from "@react-navigation/native";
 import useTimerContext from "../state/hooks/useTimerContext";
+import useRoutineContext from "../state/hooks/useRoutineContext";
 import Button from "../components/Button";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
@@ -16,6 +17,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 const Home = ({ navigation }: Props): React.ReactElement => {
   const [routines, setRoutines] = useState([] as Array<Routine>);
   const TimerContext = useTimerContext();
+  const RoutineContext = useRoutineContext();
 
   useFocusEffect(
     useCallback(() => {
@@ -33,11 +35,12 @@ const Home = ({ navigation }: Props): React.ReactElement => {
   const renderListItem: ListRenderItem<Routine> = (props) => {
     return (
       <Button
-        onPress={() =>
+        onPress={() => {
+          RoutineContext.setCurrentRoutineId(props.item.id);
           navigation.navigate("Routine", {
             routine: props.item,
-          })
-        }
+          });
+        }}
         title={props.item.name}
       />
     );

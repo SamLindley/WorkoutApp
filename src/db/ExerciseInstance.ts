@@ -163,7 +163,7 @@ export const getLastXCompletedExerciseInstances = async (
   routineId: string
 ) => {
   const routine = await getRoutine(routineId);
-  let foundInstances = [] as unknown as [ExerciseInstance];
+  let foundInstances = [] as unknown as ExerciseInstance[];
 
   routine?.workouts.forEach((workout) => {
     workout.exercises.forEach((exercise) => {

@@ -11,15 +11,16 @@ import {
   Text,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import WorkoutInstanceListItem from "../components/WorkoutInstanceListItem";
 import {
-  getExerciseInstancesById,
   getWorkoutInstance,
   deleteExerciseInstance,
   updateWorkout,
   updateExerciseInstance,
 } from "../db";
+import useRoutineContext from "../state/hooks/useRoutineContext";
 import {
   ExerciseInstance,
   RootStackParamList,
@@ -32,14 +33,14 @@ import ExerciseHistory from "../components/ExerciseHistory";
 type Props = NativeStackScreenProps<RootStackParamList, "Workout">;
 
 const Workout = ({ navigation, route }: Props) => {
-  const [exercises, setExercises] = useState([] as Array<ExerciseInstance>);
   const [workout, setWorkout] = useState({} as WorkoutInstance);
   const [isEditingMode, setIsEditingMode] = useState(false);
-  const [exerciseToShowHistoryOf, setExerciseToShowHistoryOf] = useState(
-    undefined as unknown as string
-  );
+  const [exerciseToShowHistoryOf, setExerciseToShowHistoryOf] = useState<
+    string | null
+  >(null as unknown as string);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["10%", "50%"], []);
+  const { currentRoutineId } = useRoutineContext();
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
@@ -48,13 +49,11 @@ const Workout = ({ navigation, route }: Props) => {
   useFocusEffect(
     React.useCallback(() => {
       const setupScreen = async () => {
-        const workout = await getWorkoutInstance(route.params.workoutId, "111");
+        const workout = await getWorkoutInstance(
+          route.params.workoutId,
+          currentRoutineId
+        );
         if (workout) {
-          const exercises = await getExerciseInstancesById(
-            workout.exercises.map((e) => e.id),
-            "111"
-          );
-          exercises && setExercises(exercises);
           setWorkout(workout);
         }
       };
@@ -63,14 +62,12 @@ const Workout = ({ navigation, route }: Props) => {
   );
 
   const onClickDeleteExercise = async (exercise: ExerciseInstance) => {
-    await deleteExerciseInstance(exercise.id, "111");
-    const workout = await getWorkoutInstance(route.params.workoutId, "111");
+    await deleteExerciseInstance(exercise.id, currentRoutineId);
+    const workout = await getWorkoutInstance(
+      route.params.workoutId,
+      currentRoutineId
+    );
     if (workout) {
-      const exercises = await getExerciseInstancesById(
-        workout.exercises.map((e) => e.id),
-        "111"
-      );
-      exercises && setExercises(exercises);
       setWorkout(workout);
     }
   };
@@ -87,24 +84,23 @@ const Workout = ({ navigation, route }: Props) => {
       route.params.workoutId,
       "dateCompleted",
       dateCompleted,
-      "111"
+      currentRoutineId
     );
 
+    // refactor to be in workout method
     await updateExerciseInstance(
-      exercises.map((e) => e.id),
+      workout.exercises.map((e) => e.id),
       "dateCompleted",
       dateCompleted,
-      "111"
+      currentRoutineId
     );
 
-    const workout = await getWorkoutInstance(route.params.workoutId, "111");
-    if (workout) {
-      const exercises = await getExerciseInstancesById(
-        workout.exercises.map((e) => e.id),
-        "111"
-      );
-      exercises && setExercises(exercises);
-      setWorkout(workout);
+    const updatedWorkout = await getWorkoutInstance(
+      route.params.workoutId,
+      currentRoutineId
+    );
+    if (updatedWorkout) {
+      setWorkout(updatedWorkout);
     }
   };
 
@@ -143,15 +139,15 @@ const Workout = ({ navigation, route }: Props) => {
         </TouchableOpacity>
       </View>
       <Button onPress={onClickAdd} title="Add Exercise" />
-      {exercises.length > 0 && (
+      {workout?.exercises?.length > 0 && (
         <FlatList
-          data={exercises}
+          data={workout.exercises}
           renderItem={renderListItem}
           keyExtractor={(item) => item.id}
         />
       )}
       <Button onPress={onClickComplete} title="Mark Complete" />
-      {exerciseToShowHistoryOf && (
+      {exerciseToShowHistoryOf && !isEditingMode && (
         <BottomSheet
           ref={bottomSheetRef}
           index={1}
@@ -159,8 +155,14 @@ const Workout = ({ navigation, route }: Props) => {
           onChange={handleSheetChanges}
         >
           <View>
-            <Text>Awesome 🎉</Text>
-            <ExerciseHistory name={exerciseToShowHistoryOf} routineId="111" />
+            <Text>Test Text 🎉</Text>
+            <TouchableOpacity onPress={() => setExerciseToShowHistoryOf(null)}>
+              <Ionicons name="close-circle-outline" size={24} color="black" />
+            </TouchableOpacity>
+            <ExerciseHistory
+              name={exerciseToShowHistoryOf}
+              routineId={currentRoutineId}
+            />
           </View>
         </BottomSheet>
       )}

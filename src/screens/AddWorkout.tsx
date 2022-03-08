@@ -4,6 +4,7 @@ import "react-native-get-random-values";
 import { v4 } from "uuid";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import global from "../styles";
+import useRoutineContext from "../state/hooks/useRoutineContext";
 import {
   addExerciseInstances,
   addWorkout,
@@ -18,6 +19,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "AddWorkout">;
 
 const AddWorkout = (props: Props) => {
   const [templates, setTemplates] = useState([] as Array<WorkoutTemplate>);
+  const RoutineContext = useRoutineContext();
   useEffect(() => {
     const apiCall = async () => {
       const templates = await getWorkoutTemplatesByRoutineId(
@@ -59,7 +61,7 @@ const AddWorkout = (props: Props) => {
               templateIdKey: e.id,
             };
           }),
-          "111"
+          RoutineContext.currentRoutineId
         );
         const routine = await getRoutine(props.route.params.routineIdToAddTo);
         if (routine) {

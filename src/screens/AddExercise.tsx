@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View } from "react-native";
+import useRoutineContext from "../state/hooks/useRoutineContext";
 import ExerciseTemplateFilter from "../components/ExerciseTemplateFilter";
 import ExerciseTemplateList from "../components/ExerciseTemplateList";
 import { addExerciseInstances, getExerciseTemplates } from "../db";
@@ -18,6 +19,7 @@ const AddExercise = ({ navigation, route }: Props) => {
   const [exercisesToAdd, setExercisesToAdd] = useState(
     [] as Array<ExerciseTemplate>
   );
+  const RoutineContext = useRoutineContext();
 
   useEffect(() => {
     // filter exerciseTemplates based on filter
@@ -83,7 +85,7 @@ const AddExercise = ({ navigation, route }: Props) => {
                   templateIdKey: e.id,
                 };
               }),
-              "111"
+              RoutineContext.currentRoutineId
             );
             navigation.navigate("Workout", {
               workoutId: route.params.workoutIdToAddTo,

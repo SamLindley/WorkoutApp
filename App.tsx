@@ -1,6 +1,5 @@
 import "react-native-get-random-values";
 import React from "react";
-import { Provider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -8,13 +7,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./src/screens/Home";
 import Routine from "./src/screens/Routine";
 import ExerciseInstance from "./src/screens/ExerciseInstance";
-import Workout from "./src/screens/Workout";
+import Workout from "./src/screens/WorkoutInstance";
 import { RootStackParamList } from "./src/interfaces";
 import AddExercise from "./src/screens/AddExercise";
 import AddWorkout from "./src/screens/AddWorkout";
 import Settings from "./src/screens/Settings";
 import withTimerContext from "./src/state/hoc/withTimerContext";
 import Timer from "./src/components/Timer";
+import withRoutineContext from "./src/state/hoc/withRoutineContext";
 
 const Tab = createBottomTabNavigator();
 
@@ -80,7 +80,7 @@ function MyTabs() {
         headerShown: false,
       }}
     >
-      <Tab.Screen name="App" component={HomeStackScreen} />
+      <Tab.Screen name="App" component={withRoutineContext(HomeStackScreen)} />
       <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>
   );
@@ -90,11 +90,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
-    <Provider>
-      <NavigationContainer>
-        <MyTabs />
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
   );
 };
 
